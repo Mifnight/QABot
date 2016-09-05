@@ -63,8 +63,9 @@ public class GetAnswers {
         String allContent = "";
         try {
             File file = new File("src/main/resources/QAs.txt");
-            BufferedReader bw = new BufferedReader(new FileReader(file));
-            String tmp = null;
+            InputStreamReader isr = new InputStreamReader(new FileInputStream(file),"UTF-8");
+            BufferedReader bw = new BufferedReader(isr);
+            String tmp = "";
             while ((tmp = bw.readLine()) != null) {
                 allContent += tmp;
             }
@@ -80,6 +81,7 @@ public class GetAnswers {
                 QAsMap.put(QA[0], QA[1]);
             }
         }
+        System.out.println(QAsMap);
         return QAsMap;
     }
 
