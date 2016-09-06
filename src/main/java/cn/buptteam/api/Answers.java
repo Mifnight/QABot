@@ -12,10 +12,9 @@ import javax.ws.rs.core.Response;
  */
 
 @Path("answers")
-@Produces("text/plain")
+@Produces("text/plain;charset=utf-8")
 public class Answers {
     @GET
-    @Produces("text/html")
     public Response getAnswers(){
         String output = "";
         try{
@@ -23,6 +22,6 @@ public class Answers {
         }catch (Exception ex){
             output = "fail";
         }
-        return Response.ok("yeah jersey server is running").build();
+        return Response.ok(output).build();
     }
 }
