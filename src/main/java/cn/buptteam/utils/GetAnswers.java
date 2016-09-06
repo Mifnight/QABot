@@ -1,8 +1,6 @@
 package cn.buptteam.utils;
 
-import com.hankcs.hanlp.HanLP;
 import com.hankcs.hanlp.summary.TextRankKeyword;
-import com.sun.org.apache.bcel.internal.generic.FLOAD;
 
 import java.io.*;
 import java.util.*;
@@ -19,7 +17,7 @@ public class GetAnswers {
             ArrayList<String> output = new ArrayList<String>();
             System.out.println(">>请输入问题:");
             String input = br.readLine();
-            getAnswersByKeyword(input);
+            System.out.println(getAnswersByKeyword(input).toString());
         }
     }
 
@@ -54,7 +52,6 @@ public class GetAnswers {
                     }
                 }
         );
-        System.out.println(list_Data);
         return output;
     }
 
@@ -81,7 +78,6 @@ public class GetAnswers {
                 QAsMap.put(QA[0], QA[1]);
             }
         }
-        System.out.println(QAsMap);
         return QAsMap;
     }
 
