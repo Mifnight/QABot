@@ -10,15 +10,15 @@ public class QAs {
 
     public QAs() {}
 
-    public QAs(String answer, String question) {
-        this.answer = answer;
+    public QAs(String question, String answer) {
         this.question = question;
+        this.answer = answer;
     }
 
-    public QAs(String answer, String question, Integer id) {
-        this.answer = answer;
-        this.question = question;
+    public QAs(Integer id, String question, String answer) {
         this.id = id;
+        this.question = question;
+        this.answer = answer;
     }
 
     public Integer getId() {
