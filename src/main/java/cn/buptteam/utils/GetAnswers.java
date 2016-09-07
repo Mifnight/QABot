@@ -1,5 +1,6 @@
 package cn.buptteam.utils;
 
+import com.google.gson.Gson;
 import com.hankcs.hanlp.summary.TextRankKeyword;
 
 import java.io.*;
@@ -17,7 +18,9 @@ public class GetAnswers {
             ArrayList<String> output = new ArrayList<String>();
             System.out.println(">>请输入问题:");
             String input = br.readLine();
-            System.out.println(getAnswersByKeyword(input).toString());
+            //System.out.println(getAnswersByKeyword("在路口右转弯遇同车道前车等候放行信号时如何行驶?"));
+            HashMap<String,Double> answers = (HashMap)getAnswersByKeyword(input);
+            System.out.println(new Gson().toJson(answers));
         }
     }
 
@@ -55,11 +58,11 @@ public class GetAnswers {
         return output;
     }
 
-    private static HashMap<String, String> getQAs() {
+    public static HashMap<String, String> getQAs() {
         HashMap<String, String> QAsMap = new HashMap<String, String>();
         String allContent = "";
         try {
-            File file = new File("src/main/resources/QAs.txt");
+            File file = new File(GetAnswers.class.getResource("/QAs.txt").getFile());
             InputStreamReader isr = new InputStreamReader(new FileInputStream(file),"UTF-8");
             BufferedReader bw = new BufferedReader(isr);
             String tmp = "";

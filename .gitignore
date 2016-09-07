@@ -1,3 +1,6 @@
 .idea
 target
 QABot.iml
+.DS_Store
+log
+logs

@@ -1,27 +1,28 @@
 package cn.buptteam.api;
 
 import cn.buptteam.utils.GetAnswers;
+import com.google.gson.Gson;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.util.HashMap;
 
 /**
  * Created by bitholic on 16/9/6.
  */
 
-@Path("answers")
+@Path("/answers")
 @Produces("text/plain;charset=utf-8")
 public class Answers {
     @GET
-    public Response getAnswers(){
-        String output = "";
+    @Produces("application/json")
+    public Response getAnswers(@DefaultValue("") @QueryParam("question") String question){
         try{
-            output = GetAnswers.getAnswersByKeyword("在路口右转弯遇同车道前车等候放行信号时如何行驶？").toString();
+            HashMap<String, Double> answers = (HashMap)GetAnswers.getAnswersByKeyword(question);
+            String output = new Gson().toJson(answers);
+            return Response.status(Response.Status.OK).entity(output).build();
         }catch (Exception ex){
-            output = "fail";
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-        return Response.ok(output).build();
     }
 }
