@@ -7,7 +7,9 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,20 +38,18 @@ public class BayesClassifier {
     private ArrayList<String> questionTypeList;
 
     public void loadJudgeData() throws Exception {
+        //读取类别
+        FileReader typeFileReader = new FileReader("src/main/resources/QuestionTypes.txt");
+        BufferedReader typeFileBufferReader = new BufferedReader(typeFileReader);
+        String typeTemp = null;
         questionTypeList = new ArrayList<String>();
-        questionTypeList.add("事实类");
-        questionTypeList.add("表示类");
-        questionTypeList.add("比较类");
-        questionTypeList.add("描述类");
-        questionTypeList.add("关系类");
-        questionTypeList.add("方法类");
-        questionTypeList.add("推荐类");
-        questionTypeList.add("枚举类");
-        questionTypeList.add("需求类");
-        questionTypeList.add("评价类");
-        questionTypeList.add("是非类");
-        questionTypeList.add("原因类");
-        questionTypeList.add("不作处理");
+        while ((typeTemp = typeFileBufferReader.readLine()) != null) {
+            questionTypeList.add(typeTemp);
+        }
+        typeFileBufferReader.close();
+        typeFileBufferReader.close();
+
+        //读取训练集
         judgeData = new HashMap<String, ArrayList<String>>();
         for (String str : questionTypeList)
             judgeData.put(str, new ArrayList<String>());
@@ -118,6 +118,14 @@ public class BayesClassifier {
             }
         }
         return this.questionTypeList.get(maxIndex);
+    }
+
+    public BayesClassifier() {
+        try {
+            this.loadJudgeData();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) throws Exception {

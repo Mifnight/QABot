@@ -26,6 +26,7 @@ import java.util.Scanner;
  * Created by yisic on 2016/9/5.
  */
 class Question {
+    private static BayesClassifier bayesClassifier = new BayesClassifier();
     private static final int MAX_NUMBER = 10;
     private String questionString;
     private ArrayList<String> keyWord = new ArrayList<String>();
@@ -47,14 +48,17 @@ class Question {
         for (int i = 0; i < isFeature.length; i++)
             if (isFeature[i])
                 feature.add(dependency.getWordArray()[i].LEMMA);
-        BayesClassifier bc = new BayesClassifier();
-        bc.loadJudgeData();
         System.out.print("关键字:    ");
+        for (String word : this.keyWord) {
+            System.out.print(word + "   ");
+        }
+        System.out.println();
+        System.out.print("分类特征:    ");
         for (String word : feature) {
             System.out.print(word + "   ");
         }
         System.out.println();
-        this.type = bc.getQuestionClass(feature);
+        this.type = bayesClassifier.getQuestionClass(feature);
         System.out.println("问题类型:" + this.type);
     }
 
@@ -232,7 +236,7 @@ public class QASystem {
         Scanner scanner = new Scanner(System.in);
 /****/
         ArrayList<String> a = new ArrayList<String>();
-        String b = "酒后驾车罚多少钱";
+        String b = "酒后驾车扣多少分";
         System.out.println(b);
         Question c = new Question(b);
         Answer d = new Answer(c);
