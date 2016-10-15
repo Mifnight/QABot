@@ -1,5 +1,8 @@
 package wordSimilarity;
 
+import com.hankcs.hanlp.HanLP;
+import com.hankcs.hanlp.dependency.CRFDependencyParser;
+
 import java.util.ArrayList;
 
 import static java.lang.Math.abs;
@@ -95,15 +98,8 @@ public class Similarity {
     }
 
     public static void main(String[] args){
-        System.out.println(getMaxSimilarity("鱼", "虫"));
-        System.out.println(getMaxSimilarity("番茄", "西红柿"));
-       /* WordMap wordMap = new WordMap();
-        ArrayList<String> wordNo1List = wordMap.getWordNoByValue("天桥");
-        ArrayList<String> wordNo2List = wordMap.getWordNoByValue("马路");
-        for(int i=0;i<wordNo1List.size();i++){
-            for(int j=0;j<wordNo2List.size();j++){
-                System.out.printf("%.10f\n",new Similarity(wordNo1List.get(i), wordNo2List.get(j)).getSimilarity(wordMap));
-            }
-        }*/
+       // System.out.println(getMaxSimilarity("鱼", "虫"));
+        //System.out.println(getMaxSimilarity("番茄", "西红柿"));
+        //System.out.println(HanLP.parseDependency("1"));
     }
 }
