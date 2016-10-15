@@ -13,9 +13,10 @@ import java.util.ArrayList;
  */
 public class WebSearch {
     public static void main(String[] args) throws  Exception{
-        String question = "高速公路最高时速是多少?";
+        //String question = "高速公路最高时速是多少?";
+        String question = "高速公路上最低车速是多少?";
         //getContentFromGoogle(question, 10);
-        getContentFromBaidu(question,2);
+        System.out.println(getContentFromBaidu(question, 1));
     }
 
 
@@ -62,7 +63,6 @@ public class WebSearch {
             }
             System.out.println(content);
         }catch(IOException ex){
-            ex.printStackTrace();
         }
         return content;
     }
