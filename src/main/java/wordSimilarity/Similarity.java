@@ -1,6 +1,8 @@
 package wordSimilarity;
 
-import java.io.IOException;
+import com.hankcs.hanlp.HanLP;
+import com.hankcs.hanlp.dependency.CRFDependencyParser;
+
 import java.util.ArrayList;
 
 import static java.lang.Math.abs;
@@ -42,7 +44,7 @@ public class Similarity {
     public double getSimilarity(WordMap wordMap){
             int k =0;
             int num=sameCharNum();
-            System.out.println(num);//
+            //System.out.println(num);
             if(num==0)return 0.1;
             if(num==8){
                 if(wordNo1.charAt(7)=='@'||wordNo2.charAt(7)=='@')return 0.0; //@
@@ -54,15 +56,15 @@ public class Similarity {
             }
             else {
                 int n = wordMap.sameFirstWordsNum(wordNo1.substring(0, num));
-                System.out.println(n);//
+                //System.out.println(n);
                if(num==2||num==5){
                     k = abs((wordNo1.charAt(num)-'0')*10+(wordNo1.charAt(num+1)-'0')-(wordNo2.charAt(num)-'0')*10-(wordNo2.charAt(num+1)-'0'));
-                   System.out.println(k);//
+                   //System.out.println(k);
                    if(num==2)return 0.8*Math.cos(n*Math.PI/180)*(n-k+1)/n;
                     else return 0.96*Math.cos(n*Math.PI/180)*(n-k+1)/n;
                 }
                 else k = abs(wordNo1.charAt(num)-wordNo2.charAt(num));
-                System.out.println(k);//
+               // System.out.println(k);
                 if(num==1){
                     return 0.65*Math.cos(n*Math.PI/180)*(n-k+1)/n;
                 }
@@ -75,14 +77,29 @@ public class Similarity {
         return 0.0;
     }
 
-    public static void main(String[] args)throws IOException{
+    public static double getMaxSimilarity(String word1, String word2){
+        double result = 0.0;
+        ArrayList<Double> valueList = new ArrayList<Double>();
         WordMap wordMap = new WordMap();
-        ArrayList<String> wordNo1List = wordMap.getWordNoByValue("天桥");
-        ArrayList<String> wordNo2List = wordMap.getWordNoByValue("马路");
+        ArrayList<String> wordNo1List = wordMap.getWordNoByValue(word1);
+        ArrayList<String> wordNo2List = wordMap.getWordNoByValue(word2);
         for(int i=0;i<wordNo1List.size();i++){
             for(int j=0;j<wordNo2List.size();j++){
-                System.out.printf("%.10f\n",new Similarity(wordNo1List.get(i), wordNo2List.get(j)).getSimilarity(wordMap));
+                valueList.add(new Similarity(wordNo1List.get(i), wordNo2List.get(j)).getSimilarity(wordMap));
             }
         }
+        for(int i=0;i<valueList.size();i++){
+            //System.out.println(valueList.get(i));
+            if(valueList.get(i) > result)
+                result = valueList.get(i);
+        }
+        //System.out.printf("%.10f\n",result);
+        return result;
+    }
+
+    public static void main(String[] args){
+       // System.out.println(getMaxSimilarity("鱼", "虫"));
+        //System.out.println(getMaxSimilarity("番茄", "西红柿"));
+        //System.out.println(HanLP.parseDependency("1"));
     }
 }
