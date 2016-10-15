@@ -17,7 +17,7 @@ public class WordMap {
         BufferedReader br = new BufferedReader(isr);
         String str = br.readLine();
         while(str!=null) {
-            wordMaps.put(str.substring(0,str.indexOf(" ")),WordTree.getWordList(str));
+            wordMaps.put(str.substring(0,str.indexOf(" ")), WordTree.getWordList(str));
             str=br.readLine();
         }
     }
