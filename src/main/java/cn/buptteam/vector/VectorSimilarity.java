@@ -1,4 +1,4 @@
-package cn.buptteam.calSimilarityByVector;
+package cn.buptteam.vector;
 
 import com.hankcs.hanlp.summary.TextRankKeyword;
 
@@ -11,31 +11,39 @@ import java.util.Map;
 /**
  * Created by Luyao-Li on 2016/9/5.
  */
-public class GetSimilarityValue {
+public class VectorSimilarity {
     private static final int MAX_KEYWROD_NUMBER = 20;
-    private HashMap<String, String> QAsMap = getQAsMap();
 
-    public static void main(String args[]){//
-        String s = "在路口右转弯遇同车道前车等候放行信号时如何行驶？";
-        GetSimilarityValue getSimilarityValue = new GetSimilarityValue();
-        getSimilarityValue.getSimilarityValueByKeyword(s);
+    public static double getVectorSimilarity(String sentence1, String sentence2){
+        double similarity=0.0;
+        CalVector calVector = new CalVector();
+        List<String> keywordList1 = TextRankKeyword.getKeywordList(sentence1, MAX_KEYWROD_NUMBER);
+        List<String> keywordList2 = TextRankKeyword.getKeywordList(sentence2, MAX_KEYWROD_NUMBER);
+        similarity = calVector.getSimilarity(new ArrayList<String>(keywordList1), new ArrayList<String>(keywordList2));
+        return similarity;
     }
 
-    public Map<String, Double> getSimilarityValueByKeyword(String userQuestion) {
+   /*
+   private HashMap<String, String> QAsMap = getQAsMap();
+
+
+   public Map<String, Double> getSimilarityValueByKeyword(String userQuestion) {
         int count=0;
         double similarity=0;
-        GetSimilarityValue getSimilarityValue = new GetSimilarityValue();
+        VectorSimilarity vectorSimilarity = new VectorSimilarity();
         CalVector calVector = new CalVector();
         List<String> keywordList = TextRankKeyword.getKeywordList(userQuestion, MAX_KEYWROD_NUMBER);
         HashMap<String, Double> resultWithValue = new HashMap<String, Double>();
-        for (Map.Entry<String, String> QA : getSimilarityValue.QAsMap.entrySet()) {
+        for (Map.Entry<String, String> QA : vectorSimilarity.QAsMap.entrySet()) {
             count++;
             List<String> questionKeywordList = TextRankKeyword.getKeywordList(QA.getKey(), MAX_KEYWROD_NUMBER);
             similarity = calVector.getSimilarity(new ArrayList<String>(keywordList), new ArrayList<String>(questionKeywordList));
             resultWithValue.put(QA.getValue(), similarity);
-            System.out.print(count+"  ");//
-            System.out.println(questionKeywordList);//
-            System.out.println(similarity);//
+            if(similarity>0.2){/////////////////////////////////////////
+                System.out.print(count+"  ");//
+                System.out.println(QA.getKey());//
+                System.out.println(similarity);//
+            }
         }
         return resultWithValue;
     }
@@ -64,6 +72,9 @@ public class GetSimilarityValue {
             }
         }
         return tmpQAsMap;
-    }
+    }*/
 
+    public static void main(String args[]){
+
+    }
 }

@@ -37,7 +37,6 @@ public class WordMap {
     }
 
     public int sameFirstWordsNum(String str){
-        // System.out.println(str);
         int count=0;
         for(Map.Entry<String,ArrayList<String>> word:wordMaps.entrySet()){
             if(word.getKey().substring(0,str.length()).equals(str)){

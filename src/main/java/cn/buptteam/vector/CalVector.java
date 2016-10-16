@@ -1,4 +1,4 @@
-package cn.buptteam.calSimilarityByVector;
+package cn.buptteam.vector;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,22 +49,7 @@ public class CalVector {
         return map;
     }
 
-    private static ArrayList<String> trans(String s) {//-d
-        ArrayList<String> list = new ArrayList<String>();
-        for (int i = 0; i < s.length(); i++) {
-            list.add(s.charAt(i) + "");
-            System.out.print(s.charAt(i)+" ");
-        }
-        return list;
-    }
+    public static void main(String[] args) {
 
-    public static void main(String[] args) {//-test
-        String s1 ="闯红灯交通安全";
-        String s2 = "压黄线人身安全";
-        String s3 = "撞车财产安全";
-
-        //System.out.println(getSimilarity(trans(s1), trans(s2)));
-       // System.out.println(getSimilarity(trans(s2), trans(s3)));
-        //System.out.println(getSimilarity(trans(s3), trans(s1)));
     }
 }

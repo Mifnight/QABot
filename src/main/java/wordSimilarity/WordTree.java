@@ -24,7 +24,6 @@ public class WordTree {
             word=str.substring(begin+1,end);
             wordList.add(word);
         }
-      //  System.out.println(wordList);
         return wordList;
     }
 
