@@ -23,13 +23,15 @@ public class DepenSimilarity {
         double coreSimilarity = Similarity.getMaxSimilarity(dependency1.getCoreName(), dependency2.getCoreName());
         for(Map.Entry<String, String> entry1: dependency1.getPairMap().entrySet()){
             for(Map.Entry<String, String> entry2: dependency2.getPairMap().entrySet()){
-                pairWeightSum += 0.35* Similarity.getMaxSimilarity(entry1.getKey(), entry2.getKey())+0.65*coreSimilarity;
+                pairWeightSum += 0.45* Similarity.getMaxSimilarity(entry1.getKey(), entry2.getKey())+0.55*coreSimilarity;
             }
         }
+        if(pairWeightSum >= maxMatchPair)
+            return 1.0;
         return pairWeightSum / maxMatchPair;
     }
 
     public static void  main(String[] args){
-        System.out.println(new DepenSimilarity("高速公路正确超车方式","车辆在高速公路行驶时，可以仅凭感觉确认车速是否正确？").getDepenSimilarity());
+        System.out.println(new DepenSimilarity("行车中遇抢救伤员的救护车从本车道逆向驶来时，应","行车中遇抢救伤员的救护车从本车道逆向驶来时，应").getDepenSimilarity());
     }
 }

@@ -1,5 +1,6 @@
 package cn.buptteam.utils;
 
+import cn.buptteam.sentence.SentenceSimilarity;
 import com.google.gson.Gson;
 import com.hankcs.hanlp.summary.TextRankKeyword;
 
@@ -10,7 +11,7 @@ import java.util.*;
  * Created by bitholic on 16/8/10.
  */
 public class GetAnswers {
-    private static final int MAX_NUMBER = 10;
+    //private static final int MAX_NUMBER = 10;
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -18,19 +19,22 @@ public class GetAnswers {
             ArrayList<String> output = new ArrayList<String>();
             System.out.println(">>请输入问题:");
             String input = br.readLine();
-            //System.out.println(getAnswersByKeyword("在路口右转弯遇同车道前车等候放行信号时如何行驶?"));
-            HashMap<String,Double> answers = (HashMap)getAnswersByKeyword(input);
-            System.out.println(new Gson().toJson(answers));
+            System.out.println(getAnswersByKeyword(input));
+            //HashMap<String,Double> answers = (HashMap)getAnswersByKeyword(input);
+           // System.out.println(new Gson().toJson(answers));
         }
     }
 
     public static Map<String, Double> getAnswersByKeyword(String input) {
         HashMap<String, String> QAsMap = getQAs();
-        List<String> keywordList = TextRankKeyword.getKeywordList(input, MAX_NUMBER);
         Map<String, Double> output = new HashMap<String, Double>();
         for (Map.Entry<String, String> QA : QAsMap.entrySet()) {
-            List<String> compList = TextRankKeyword.getKeywordList(QA.getKey(), MAX_NUMBER);
-            int counter = compareList(keywordList, compList);
+            double score = new SentenceSimilarity(input, QA.getKey()).getSentenceSimilarity();
+            if(score >= 0.375){
+                output.put(QA.getKey(), score);
+            }
+            //List<String> compList = TextRankKeyword.getKeywordList(QA.getKey(), MAX_NUMBER);
+            /*int counter = compareList(keywordList, compList);
             if (counter >= 2) {
                 String answer = QA.getValue();
                 Double score = counter * 1.0 / compList.size();
@@ -39,11 +43,11 @@ public class GetAnswers {
                         output.put(answer, score);
                     }
                 } else {
-                    output.put(answer, score);
+
                 }
-            }
+            }*/
         }
-        List<Map.Entry<String, Double>> list_Data = new ArrayList<Map.Entry<String, Double>>(output.entrySet());
+       List<Map.Entry<String, Double>> list_Data = new ArrayList<Map.Entry<String, Double>>(output.entrySet());
         Collections.sort(list_Data, new Comparator<Map.Entry<String, Double>>() {
                     public int compare(Map.Entry<String, Double> o1, Map.Entry<String, Double> o2) {
                         if ((o2.getValue() - o1.getValue()) > 0)

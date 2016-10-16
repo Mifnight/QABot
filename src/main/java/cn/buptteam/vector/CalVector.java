@@ -34,6 +34,8 @@ public class CalVector {
             mod2 += entry.getValue() * entry.getValue();
         }
         result = sum / (Math.sqrt(mod1) * Math.sqrt(mod2));
+        if(sum >= Math.sqrt(mod1) * Math.sqrt(mod2))
+            return 1.0;
         return result;
     }
 

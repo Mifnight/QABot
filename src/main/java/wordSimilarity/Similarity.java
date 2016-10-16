@@ -17,7 +17,7 @@ public class Similarity {
     }
 
     public int sameCharNum(){
-        int i=0;
+        int i;
         for(i=0; i<word1.length()&&i< word2.length(); i++){
             if(i==2||i==5){
                 int result1=word1.charAt(i)*10+word1.charAt(i+1);
@@ -81,8 +81,7 @@ public class Similarity {
     }
 
     public static void main(String[] args){
-        System.out.println(getMaxSimilarity("迅速的", "正确的" ));
-        //List<Term> list = HanLP.newSegment().enableAllNamedEntityRecognize(true).seg("姚明应该如何超车");
-        //System.out.println(list);
+        System.out.println(getMaxSimilarity("快捷", "迅速" ));
+
     }
 }

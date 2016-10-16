@@ -18,15 +18,12 @@ public class SentenceSimilarity {
 
     public double getSentenceSimilarity(){
         double sentenceSimilarity;
-        if(vectorSimilarity < 0.1 || depenSimilarity < 0.1)
-            sentenceSimilarity = 0.0;
-        else
-            sentenceSimilarity = vectorSimilarity*0.45+depenSimilarity+0.55;
+        sentenceSimilarity = vectorSimilarity*0.55+depenSimilarity*0.45;
         return sentenceSimilarity;
     }
 
     public static void  main(String[] args){
-        System.out.println(new SentenceSimilarity("机动车应该如何超车", "不得超车的情况").getSentenceSimilarity());
+        System.out.println(new SentenceSimilarity("机动车应该如何超车", "机动车超车规定").getSentenceSimilarity());
     }
 
 }
