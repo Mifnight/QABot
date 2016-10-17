@@ -5,6 +5,7 @@ import classifier.BayesClassifier;
 import com.hankcs.hanlp.HanLP;
 import com.hankcs.hanlp.corpus.dependency.CoNll.CoNLLSentence;
 import com.hankcs.hanlp.corpus.dependency.CoNll.CoNLLWord;
+import com.hankcs.hanlp.seg.common.Term;
 import com.hankcs.hanlp.summary.TextRankKeyword;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -21,6 +22,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 /**
  * Created by yisic on 2016/9/5.
@@ -40,7 +42,8 @@ class Question {
             CoNLLWord temp = dependency.getWordArray()[i];
             if (temp.POSTAG.contains("ry")) {
                 isFeature[i] = true;
-                isFeature[temp.HEAD.ID - 1] = true;
+                if (temp.HEAD.ID > 0)
+                    isFeature[temp.HEAD.ID - 1] = true;
             }
             if (temp.DEPREL.equals("核心关系") || temp.DEPREL.equals("主谓关系") || temp.DEPREL.equals("动宾关系"))
                 isFeature[i] = true;
@@ -89,6 +92,7 @@ class Question {
 
 class AnswerNode {
     public String answerStr;
+    public ArrayList<String> filter = new ArrayList<String>();
     public double score;
 
     AnswerNode(String answerStr, double score) {
@@ -229,21 +233,40 @@ class Answer {
     }
 }
 
+
 public class QASystem {
+
+    public static void filter(Question question, Answer answer) {
+        for (AnswerNode ansNode : answer.answerNodes) {
+            if (question.getType().equals("数字")) {
+                String[] sentenceList = ansNode.answerStr.split("。");
+                for (String str : sentenceList)
+                    if (Pattern.compile(".*\\d+.*").matcher(str).matches())
+                        ansNode.filter.add(str);
+            } else if (question.getType().equals("时间")) {
+                String[] sentenceList = ansNode.answerStr.split("。");
+                for (String str : sentenceList)
+                    if (Pattern.compile(".*(年|月|日)+.*").matcher(str).matches())
+                        ansNode.filter.add(str);
+            } else {
+                ansNode.filter.add(ansNode.answerStr);
+            }
+        }
+    }
 
 
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
-/****/
-        ArrayList<String> a = new ArrayList<String>();
-        String b = "酒后驾车扣多少分";
-        System.out.println(b);
-        Question c = new Question(b);
-        Answer d = new Answer(c);
-        for (int i = 0; i < d.answerNodes.size(); i++) {
-            System.out.println(i + ":   " + "score=" + d.answerNodes.get(i).score);
-            System.out.println(d.answerNodes.get(i).answerStr + "\n\n");
-        }
+///****/
+//        ArrayList<String> a = new ArrayList<String>();
+//        String b = "酒后驾车扣多少分";
+//        System.out.println(b);
+//        Question c = new Question(b);
+//        Answer d = new Answer(c);
+//        for (int i = 0; i < d.answerNodes.size(); i++) {
+//            System.out.println(i + ":   " + "score=" + d.answerNodes.get(i).score);
+//            System.out.println(d.answerNodes.get(i).answerStr + "\n\n");
+//        }
 
 /****/
         while (true) {
@@ -260,12 +283,15 @@ public class QASystem {
             Answer answer = new Answer(question);
 
             //答案抽取
-            //TODO
+            filter(question, answer);
 
             //输出
             for (int i = 0; i < answer.answerNodes.size(); i++) {
                 System.out.println(i + ":   " + "score=" + answer.answerNodes.get(i).score);
-                System.out.println(answer.answerNodes.get(i).answerStr + "\n\n");
+                //System.out.println("段落:   " + answer.answerNodes.get(i).answerStr);
+                System.out.println("过滤后:");
+                for (String filter : answer.answerNodes.get(i).filter)
+                    System.out.println(filter);
             }
         }
     }

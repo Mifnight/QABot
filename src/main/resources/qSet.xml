@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="GBK" standalone="no"?>
 <QUESTIONBANK>
     <DOC>
+        <Question>酒后驾车拘留多久</Question>
+        <QuestionStyle>时间</QuestionStyle>
+    </DOC>
+    <DOC>
         <Question>安全气囊是一种什么装置？</Question>
         <QuestionStyle>实体</QuestionStyle>
     </DOC>
@@ -529,11 +533,11 @@
         <QuestionStyle>描述</QuestionStyle>
     </DOC>
     <DOC>
-        <Question>行车中遇交通事故受伤者需要抢救时，应怎样做？</Question>
+        <Question>行车中遇交通事故受伤者需要抢救时，应怎么办？</Question>
         <QuestionStyle>描述</QuestionStyle>
     </DOC>
     <DOC>
-        <Question>行车中遇列队横过道路的学生时，应怎样做？</Question>
+        <Question>行车中遇列队横过道路的学生时，应怎么办？</Question>
         <QuestionStyle>描述</QuestionStyle>
     </DOC>
     <DOC>
