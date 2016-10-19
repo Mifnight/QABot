@@ -18,21 +18,6 @@ import java.util.Map;
  * Created by yisic on 2016/9/7.
  */
 public class BayesClassifier {
-    /*
-    * 推荐类
-    * 表示类
-    * 比较类
-    * 描述类
-    * 关系类
-    * 方法类
-    * 事实类
-    * 枚举类
-    * 不作处理
-    * 需求类
-    * 评价类
-    * 是非类
-    * 原因类
-    * */
     private Map<String, ArrayList<String>> judgeData;
     private int judgeDataNum;
     private ArrayList<String> questionTypeList;

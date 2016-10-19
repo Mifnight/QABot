@@ -241,14 +241,28 @@ public class QASystem {
             if (question.getType().equals("数字")) {
                 String[] sentenceList = ansNode.answerStr.split("。");
                 for (String str : sentenceList)
-                    if (Pattern.compile(".*\\d+.*").matcher(str).matches())
+                    if (Pattern.compile(".*(\\d|一|二|三|四|五|六|七|八|九|十)+.*").matcher(str).matches())
                         ansNode.filter.add(str);
             } else if (question.getType().equals("时间")) {
                 String[] sentenceList = ansNode.answerStr.split("。");
                 for (String str : sentenceList)
-                    if (Pattern.compile(".*(年|月|日)+.*").matcher(str).matches())
+                    if (Pattern.compile(".*(年|月|日|星期|小时|分钟|秒)+.*").matcher(str).matches())
                         ansNode.filter.add(str);
-            } else {
+            }
+//            else if (question.getType().equals("实体")) {
+//                String[] sentenceList = ansNode.answerStr.split("。");
+//                for (String str : sentenceList) {
+//                    CoNLLWord[] coNLLWordList = HanLP.parseDependency(str).getWordArray();
+//                    for (CoNLLWord word:coNLLWordList) {
+//                        if(word.POSTAG.contains("n")&&(word.DEPREL.equals("主谓关系")||word.DEPREL.equals("核心关系")))
+//
+//
+//
+//                    }
+//
+//                }
+//            }
+            else {
                 ansNode.filter.add(ansNode.answerStr);
             }
         }
