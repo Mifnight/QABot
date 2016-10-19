@@ -28,59 +28,63 @@ public class GetAnswers {
         }
     }
 
-    public static Map<String, Double> getAnswersByKeyword(String input) throws Exception{
-        HashMap<String, String> QAsMap = getQAs();
-        List<String> keywordList = TextRankKeyword.getKeywordList(input, MAX_NUMBER);
+    public static Map<String, Double> getAnswersByKeyword(String input){
+        //HashMap<String, String> QAsMap = getQAs();
+        //List<String> keywordList = TextRankKeyword.getKeywordList(input, MAX_NUMBER);
         Map<String, Double> output = new HashMap<String, Double>();
-        Classifier.Init();
-        QADataBaseSearcher.Init();
-        //问句处理
-        Question question = SentenceAnalyzer.AnalyzeSentence(input);
+        try {
+            Classifier.Init();
+            QADataBaseSearcher.Init();
+            //问句处理
+            Question question = SentenceAnalyzer.AnalyzeSentence(input);
 
-        //问题分类
-        Classifier.Classify(question);
+            //问题分类
+            Classifier.Classify(question);
 
-        //答案检索
-        Answer answer1 = AnswerExplorer.exploreAnswer(question);
+            //答案检索
+            Answer answer1 = AnswerExplorer.exploreAnswer(question);
 
-        //答案抽取
-        Filter.filterAnswer(question, answer1);
+            //答案抽取
+            Filter.filterAnswer(question, answer1);
 
-        for (int i = 0; i < answer1.answerNodeList.size(); i++) {
-            AnswerNode tmp = answer1.answerNodeList.get(i);
-            String tmpAnswer = "";
-            for (int i1 = 0; i1 < tmp.answerSentence.size(); i1++) {
-                tmpAnswer += tmp.answerSentence.get(i1);
-            }
-            output.put(tmpAnswer,tmp.score);
-        }
-//        for (Map.Entry<String, String> QA : QAsMap.entrySet()) {
-//            List<String> compList = TextRankKeyword.getKeywordList(QA.getKey(), MAX_NUMBER);
-//            int counter = compareList(keywordList, compList);
-//            if (counter >= 2) {
-//                String answer = QA.getValue();
-//                Double score = counter * 1.0 / compList.size();
-//                if (output.containsKey(answer)) {
-//                    if (output.get(answer) < score) {
-//                        output.put(answer, score);
-//                    }
-//                } else {
-//                    output.put(answer, score);
-//                }
-//            }
-//        }
-        List<Map.Entry<String, Double>> list_Data = new ArrayList<Map.Entry<String, Double>>(output.entrySet());
-        Collections.sort(list_Data, new Comparator<Map.Entry<String, Double>>() {
-                    public int compare(Map.Entry<String, Double> o1, Map.Entry<String, Double> o2) {
-                        if ((o2.getValue() - o1.getValue()) > 0)
-                            return 1;
-                        else if ((o2.getValue() - o1.getValue()) == 0)
-                            return 0;
-                        else
-                            return -1;
-                    }
+            for (int i = 0; i < answer1.answerNodeList.size(); i++) {
+                AnswerNode tmp = answer1.answerNodeList.get(i);
+                String tmpAnswer = "";
+                for (int i1 = 0; i1 < tmp.answerSentence.size(); i1++) {
+                    tmpAnswer += tmp.answerSentence.get(i1);
                 }
-        );
+                output.put(tmpAnswer, tmp.score);
+            }
+            //        for (Map.Entry<String, String> QA : QAsMap.entrySet()) {
+            //            List<String> compList = TextRankKeyword.getKeywordList(QA.getKey(), MAX_NUMBER);
+            //            int counter = compareList(keywordList, compList);
+            //            if (counter >= 2) {
+            //                String answer = QA.getValue();
+            //                Double score = counter * 1.0 / compList.size();
+            //                if (output.containsKey(answer)) {
+            //                    if (output.get(answer) < score) {
+            //                        output.put(answer, score);
+            //                    }
+            //                } else {
+            //                    output.put(answer, score);
+            //                }
+            //            }
+            //        }
+//            List<Map.Entry<String, Double>> list_Data = new ArrayList<Map.Entry<String, Double>>(output.entrySet());
+//            Collections.sort(list_Data, new Comparator<Map.Entry<String, Double>>() {
+//                        public int compare(Map.Entry<String, Double> o1, Map.Entry<String, Double> o2) {
+//                            if ((o2.getValue() - o1.getValue()) > 0)
+//                                return 1;
+//                            else if ((o2.getValue() - o1.getValue()) == 0)
+//                                return 0;
+//                            else
+//                                return -1;
+//                        }
+//                    }
+//            );
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return output;
     }
 

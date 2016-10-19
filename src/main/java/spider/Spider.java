@@ -23,26 +23,30 @@ public class Spider {
         }
     }
 
-    public static ArrayList<String> getAnswerFromZhiDao(String question) throws Exception {
+    public static ArrayList<String> getAnswerFromZhiDao(String question) {
         ArrayList<String> answerSet = new ArrayList<String>();
-        String url = "http://zhidao.baidu.com/search?ie=gbk&word=" + URLEncoder.encode(question, "GBK");
-        Document document = Jsoup.connect(url).get();
-        //最佳匹配
-        String bestZhiDaoQAURL = "";
         try {
-            bestZhiDaoQAURL = document.getElementsByClass("special-box-p").get(0).getElementsByClass("dt").get(0).getElementsByAttribute("href").get(0).attr("abs:href");
-        } catch (IndexOutOfBoundsException e) {
-            //answerSet.add("无");
-        }
-        if (!bestZhiDaoQAURL.equals(""))
-            answerSet.add(getAnswerFromZhiDaoPage(bestZhiDaoQAURL));
-        //第一页所有非最佳匹配问答对
-        Elements answerURL = document.getElementsByClass("ti");
-        for (Element ansURL : answerURL) {
-            String urlTemp = ansURL.attr("abs:href");
-            String ansTemp;
-            if (!urlTemp.equals("") && !(ansTemp = getAnswerFromZhiDaoPage(urlTemp)).equals(""))
-                answerSet.add(ansTemp);
+            String url = "http://zhidao.baidu.com/search?ie=gbk&word=" + URLEncoder.encode(question, "GBK");
+            Document document = Jsoup.connect(url).get();
+            //最佳匹配
+            String bestZhiDaoQAURL = "";
+            try {
+                bestZhiDaoQAURL = document.getElementsByClass("special-box-p").get(0).getElementsByClass("dt").get(0).getElementsByAttribute("href").get(0).attr("abs:href");
+            } catch (IndexOutOfBoundsException e) {
+                //answerSet.add("无");
+            }
+            if (!bestZhiDaoQAURL.equals(""))
+                answerSet.add(getAnswerFromZhiDaoPage(bestZhiDaoQAURL));
+            //第一页所有非最佳匹配问答对
+            Elements answerURL = document.getElementsByClass("ti");
+            for (Element ansURL : answerURL) {
+                String urlTemp = ansURL.attr("abs:href");
+                String ansTemp;
+                if (!urlTemp.equals("") && !(ansTemp = getAnswerFromZhiDaoPage(urlTemp)).equals(""))
+                    answerSet.add(ansTemp);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return answerSet;
     }

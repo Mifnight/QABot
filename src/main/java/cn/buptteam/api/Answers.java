@@ -1,6 +1,7 @@
 package cn.buptteam.api;
 
 import cn.buptteam.utils.GetAnswers;
+import cn.buptteam.utils.HibernateUtil;
 import com.google.gson.Gson;
 
 import javax.ws.rs.*;
@@ -22,7 +23,7 @@ public class Answers {
             String output = new Gson().toJson(answers);
             return Response.status(Response.Status.OK).entity(output).build();
         }catch (Exception ex){
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.OK).entity(HibernateUtil.printException(ex)).build();
         }
     }
 }
