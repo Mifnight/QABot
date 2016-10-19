@@ -28,7 +28,9 @@ public class Classifier {
 
     public static void Init() throws Exception {
         //读取类别
-        FileReader typeFileReader = new FileReader("src/main/resources/QuestionTypes.txt");
+        File file = new File(Classifier.class.getResource("/QuestionTypes.txt").getFile());
+        FileReader typeFileReader = new FileReader(file);
+        //FileReader typeFileReader = new FileReader("src/main/resources/QuestionTypes.txt");
         BufferedReader typeFileBufferReader = new BufferedReader(typeFileReader);
         String typeTemp = null;
         questionTypeList = new ArrayList<String>();
@@ -42,7 +44,8 @@ public class Classifier {
         trainingSet = new HashMap<String, ArrayList<String>>();
         for (String str : questionTypeList)
             trainingSet.put(str, new ArrayList<String>());
-        File dataFile = new File("src/main/resources/qSet.xml");
+        File dataFile = new File(Classifier.class.getResource("/qSet.xml").getFile());
+        //File dataFile = new File("src/main/resources/qSet.xml");
         Element element = null;
         DocumentBuilder db = null;
         DocumentBuilderFactory dbf = null;

@@ -69,22 +69,26 @@ public class WebSearcher {
         qSort(data, 0, data.size() - 1);
     }
 
-    public static void getAnswerFromWeb(Question question, Answer answer) throws Exception {
-        ArrayList<String> zhiDaoData = Spider.getAnswerFromZhiDao(question.questionSentence);
-        ArrayList<AnswerNode> tempAnswerSet = new ArrayList<AnswerNode>();
-        int[] questionVector = new int[question.keyWords.size()];
-        for (int i = 0; i < questionVector.length; i++)
-            questionVector[i] = getWordNumFromParagraph(question.keyWords.get(i).getProtoWord(), question.questionSentence);
-        for (String zhiDaoStr : zhiDaoData) {
-            int[] dataVector = new int[question.keyWords.size()];
-            for (int i = 0; i < dataVector.length; i++)
-                dataVector[i] = getWordSetNumFromParagraph(question.keyWords.get(i), zhiDaoStr);
-            tempAnswerSet.add(new AnswerNode(zhiDaoStr, getCos(questionVector, dataVector)));
+    public static void getAnswerFromWeb(Question question, Answer answer){
+        try {
+            ArrayList<String> zhiDaoData = Spider.getAnswerFromZhiDao(question.questionSentence);
+            ArrayList<AnswerNode> tempAnswerSet = new ArrayList<AnswerNode>();
+            int[] questionVector = new int[question.keyWords.size()];
+            for (int i = 0; i < questionVector.length; i++)
+                questionVector[i] = getWordNumFromParagraph(question.keyWords.get(i).getProtoWord(), question.questionSentence);
+            for (String zhiDaoStr : zhiDaoData) {
+                int[] dataVector = new int[question.keyWords.size()];
+                for (int i = 0; i < dataVector.length; i++)
+                    dataVector[i] = getWordSetNumFromParagraph(question.keyWords.get(i), zhiDaoStr);
+                tempAnswerSet.add(new AnswerNode(zhiDaoStr, getCos(questionVector, dataVector)));
+            }
+            sortAnswer(tempAnswerSet);
+            for (int i = 0; i < 5 && i < tempAnswerSet.size(); i++)
+                if (tempAnswerSet.get(i).score != 0)
+                    answer.addAnswerNode(tempAnswerSet.get(i));
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        sortAnswer(tempAnswerSet);
-        for (int i = 0; i < 5 && i < tempAnswerSet.size(); i++)
-            if (tempAnswerSet.get(i).score != 0)
-                answer.addAnswerNode(tempAnswerSet.get(i));
 
     }
 

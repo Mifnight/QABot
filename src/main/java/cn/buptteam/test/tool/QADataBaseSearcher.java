@@ -32,7 +32,7 @@ public class QADataBaseSearcher {
 
     public static void Init() throws Exception {
         qaData = new ArrayList<QATuple>();
-        File qaFile = new File("src/main/resources/qaSet.xml");
+        File qaFile = new File(QADataBaseSearcher.class.getResource("/qaSet.xml").getFile());
         Element element = null;
         DocumentBuilder db = null;
         DocumentBuilderFactory dbf = null;
