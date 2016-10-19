@@ -16,7 +16,8 @@ public class WebSearch {
         //String question = "高速公路最高时速是多少?";
         String question = "高速公路上最低车速是多少?";
         //getContentFromGoogle(question, 10);
-        System.out.println(getContentFromBaidu(question, 1));
+        //System.out.println(getContentFromBaidu(question, 1));
+        System.out.println(getContentFromGoogle(question, 1));
     }
 
 

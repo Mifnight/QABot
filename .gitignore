@@ -6,3 +6,4 @@ log
 logs
 bibot.xml
 src/main/java/cn/buptteam/test/
+src/main/resources/hanlp.properties
