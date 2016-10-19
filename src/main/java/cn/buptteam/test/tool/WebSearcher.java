@@ -82,7 +82,7 @@ public class WebSearcher {
             tempAnswerSet.add(new AnswerNode(zhiDaoStr, getCos(questionVector, dataVector)));
         }
         sortAnswer(tempAnswerSet);
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 5 && i < tempAnswerSet.size(); i++)
             if (tempAnswerSet.get(i).score != 0)
                 answer.addAnswerNode(tempAnswerSet.get(i));
 
