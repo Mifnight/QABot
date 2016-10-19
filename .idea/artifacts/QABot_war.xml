@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="QABot:war">
-    <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="QABot.war">
-      <element id="artifact" artifact-name="QABot:war exploded" />
-    </root>
-  </artifact>
-</component>
