@@ -7,3 +7,20 @@ body, h1, h2, h3, h4, h5, h6 {
   padding: 0;
 }
 
+[class^="muidocs-icon-"], [class*=" muidocs-icon-"] {
+  font-family: 'material-ui-icons';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.muidocs-icon-custom-github:before {
+  content: "\e625";
+}

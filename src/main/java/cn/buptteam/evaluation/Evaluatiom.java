@@ -7,7 +7,7 @@ package cn.buptteam.evaluation;
 public class Evaluatiom {
     private int num_of_submit;
     private double p;
-    private double weight = 0.7;
+    private double weight = 0.5;
     private double init_score;
     private static final double Z = 1.96;
     private final String question;
