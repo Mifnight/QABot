@@ -5,7 +5,6 @@ import cn.buptteam.test.structure.AnswerNode;
 import cn.buptteam.test.structure.Question;
 import cn.buptteam.test.tool.*;
 import com.google.gson.Gson;
-import com.hankcs.hanlp.summary.TextRankKeyword;
 
 import java.io.*;
 import java.util.*;
